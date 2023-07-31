@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hi</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .content {
+            text-align: center;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px;
+            border: 2px solid #333;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            color: #333;
+            background-color: #f5f5f5;
+            transition: background-color 0.2s ease-in-out;
+            position: absolute;
+        }
+
+        .button:hover {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .button-margin {
+            margin-left: 10px; /* Adjust the margin as needed */
+        }
+
+        .sad-text {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 30px;
+            font-weight: bold;
+            color: red;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <p id="textToChange">Hi Ne!</p>
+        <button class="button" onclick="changeText()">Next</button>
+    </div>
+
+    <div class="sad-text" id="sadText">Im sad na :<</div>
+
+    <script>
+        var questionIndex = 0;
+        var questions = [
+            "CAN I COURT YOU?", // Make the questions uppercase
+        ];
+
+        var noButtonClickCount = 0; // Counter to keep track of 'No' button clicks
+
+        function changeText() {
+            var textElement = document.getElementById('textToChange');
+            var buttonElement = document.querySelector('.button');
+
+            if (questionIndex < questions.length) {
+                textElement.innerHTML = questions[questionIndex];
+                questionIndex++;
+                buttonElement.style.display = 'none';
+
+                var answerButtons = document.createElement('div');
+                answerButtons.innerHTML = '<button class="button" onclick="answerYes()">Yes</button>' +
+                                          '<button class="button" onclick="answerNo()">No</button>';
+                textElement.insertAdjacentElement('afterend', answerButtons);
+            } else {
+                textElement.innerHTML = "End of questions. Thanks!";
+            }
+        }
+
+        function answerYes() {
+            // Handle 'Yes' answer here
+            var textElement = document.getElementById('textToChange');
+            textElement.innerHTML = "Yiieeee ahdhashdhjadjkajkdkmdasnfguifq!";
+            var answerButtons = document.querySelector('.content > div');
+            answerButtons.remove();
+
+            // Show the first alert
+            alert("AHBShjdbHABDHBjd lah");
+
+            // Show the second alert after clicking "OK" in the first alert
+            setTimeout(function () {
+                alert("HASHDAHHAHASJ");
+            }, 500);
+
+            // Remove the "Im sad na" text and the image
+            var sadTextElement = document.getElementById('sadText');
+            var imageElement = document.querySelector('.content img');
+            if (sadTextElement && imageElement) {
+                sadTextElement.remove();
+                imageElement.remove();
+            }
+        }
+
+        function answerNo() {
+            // Handle 'No' answer here
+            var buttonElement = document.querySelectorAll('.button')[1]; // Select the second button (index 1), which is the 'No' button.
+            var posX = Math.random() * (window.innerWidth - buttonElement.offsetWidth);
+            var posY = Math.random() * (window.innerHeight - buttonElement.offsetHeight);
+            buttonElement.style.left = posX + 'px';
+            buttonElement.style.top = posY + 'px';
+
+            // Increase the 'No' button click count
+            noButtonClickCount++;
+
+            // Check if the 'No' button is clicked three times
+            if (noButtonClickCount === 3) {
+                // Show "I'm sad" text in 30px font size
+                var sadTextElement = document.getElementById('sadText');
+                sadTextElement.style.display = 'block';
+            }
+
+            // Check if the 'No' button is clicked five times for the image (optional: if you want to display the image again)
+            if (noButtonClickCount === 5) {
+                // Show an image when clicked five times
+                var imageElement = document.createElement('img');
+                imageElement.src = 'https://media.tenor.com/N74zSaLgUWMAAAAM/sad-eyes-pretty-please.gif'; // Replace 'path_to_your_image.jpg' with the actual path to your image
+                imageElement.style.width = '150px'; // Adjust the width and height as needed
+                imageElement.style.height = '100px';
+                imageElement.style.position = 'absolute';
+                imageElement.style.left = '10px'; // Set the position to the left side
+                var contentDiv = document.querySelector('.content');
+                contentDiv.appendChild(imageElement);
+            }
+        }
+    </script>
+</body>
+</html>
